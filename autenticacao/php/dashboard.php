@@ -55,6 +55,7 @@ include '../../includes/db.php';
     <hr>
     <div class="offcanvas-body">
       <a href="../../autenticado.php" class="d-block mb-2">⬅️ Voltar</a>
+      <a href="editar_perfil.php" class="d-block mb-2">✏️ Editar Perfil</a>
       <a href="#catalogo" class="d-block mb-2">📚 Catálogo</a>
       <a href="#alugueis" class="d-block mb-2">📖 Meus Aluguéis</a>
       <a href="#favoritos" class="d-block mb-2">❤️ Favoritos</a>
@@ -68,6 +69,7 @@ include '../../includes/db.php';
       <div class="col-md-3 sidebar d-none d-md-block">
         <h4>Olá, <?= htmlspecialchars($nome_usuario) ?>!</h4>
         <a href="../../autenticado.php">⬅️ Voltar</a>
+        <a href="editar_perfil.php">✏️ Editar Perfil</a>
         <a href="#catalogo">📚 Catálogo</a>
         <a href="#alugueis">📖 Meus Aluguéis</a>
         <a href="#favoritos">❤️ Favoritos</a>

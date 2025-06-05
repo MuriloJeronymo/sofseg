@@ -20,7 +20,7 @@ credentials_json = json.dumps(credentials)
 with open(original_image, "rb") as f:
     image_data = f.read()
 
-# Anexa as credenciais ao final do arquivo com um marcador
+# Anexa as credenciais no final do arquivo com um marcador
 with open(output_image, "wb") as f:
     f.write(image_data)
     f.write(b"\n" + marker.encode() + credentials_json.encode())
