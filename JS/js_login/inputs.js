@@ -25,6 +25,18 @@ campos.forEach(campo => {
     const input = document.getElementById(campo.id);
     const message = document.getElementById(`${campo.id}-mensagem`);
 
+    // Sanitização de entrada para proteção contra ataques XSS
+    input.addEventListener('input', function (e) {
+        const value = e.target.value;
+        const sanitizedValue = value
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+
+        e.target.value = sanitizedValue;
+    });
+
     function feedbackVisual() {
         const value = input.value.trim();
 
@@ -69,3 +81,4 @@ campos.forEach(campo => {
     // Validação inicial (sem mensagem)
     feedbackVisual();
 });
+
