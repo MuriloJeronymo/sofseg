@@ -78,8 +78,8 @@
                     </span>
 
                     <!-- EMAIL -->
-                    <div class="container2 position-relative">
-                        <input class="input100 input-cadastro" type="email" id="email" name="email" placeholder="Email"
+                    <div class="container2 position-relative my-4">
+                        <input class="input100" type="email" id="email" name="email" placeholder="Email"
                             required>
                         <p id="email-mensagem" class="mensagem"></p>
                         <span class="focus-input100"></span>
@@ -89,8 +89,8 @@
                     </div>
 
                     <!-- SENHA -->
-                    <div class="container2 position-relative">
-                        <input class="input100 input-cadastro" type="password" id="password" name="senha"
+                    <div class="container2 position-relative my-4">
+                        <input class="input100" type="password" id="password" name="senha"
                             placeholder="Senha" required>
                         <p id="password-mensagem" class="mensagem"></p>
                         <span class="focus-input100"></span>
@@ -109,11 +109,6 @@
                         </button>
                     </div>
 
-                    <div class="text-center p-t-20">
-                        <span class="fonte-1">Recuperar</span>
-                        <a class="fonte-2" href="/ProjetoSoftwareSeguro/autenticacao/html/recuperarSenha.html">Senha</a>
-                    </div>
-
                     <div class="text-center p-t-136">
                         <a class="fonte-3" href="/ProjetoSoftwareSeguro/autenticacao/html/cadastro.html">
                             Criar uma conta
@@ -129,6 +124,8 @@
         integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
         crossorigin="anonymous">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="/ProjetoSoftwareSeguro/JS/js_login/criptografia.js"></script>
     <script src="/ProjetoSoftwareSeguro/JS/js_login/alerta.js"></script>
     <script src="/ProjetoSoftwareSeguro/JS/js_login/inputs-login.js"></script>
     <script src="/ProjetoSoftwareSeguro/JS/login_fetch.js" defer></script>

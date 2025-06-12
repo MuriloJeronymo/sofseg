@@ -6,12 +6,20 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-require_once '../includes/db.php';
-require_once '../config.php';
+// Check if in test environment to use mock db
+if (defined("TEST_ENVIRONMENT") && TEST_ENVIRONMENT === true) {
+    require_once __DIR__ . "/../includes/db_security_mock.php";
+    $conn = new MockMySQLi_Security();
+} else {
+    require_once __DIR__ . "/../includes/db.php";
+}
+
+require_once __DIR__ . "/../config.php";
+require_once __DIR__ . "/../includes/validation_utils.php"; // Inclui o novo arquivo de utilitários
 
 $response = ["status" => "erro", "mensagem" => "Ocorreu um erro desconhecido."];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dados = json_decode(file_get_contents("php://input"));
 
     if (
@@ -21,23 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         isset($dados->senha) && !empty($dados->senha)
     ) {
 
-        // ALTERADO: Captura os dados brutos e sanitizados primeiro
         $nome = trim($dados->nome);
         $email = trim($dados->email);
         $telefone = trim($dados->telefone);
-        $senha_raw = $dados->senha; // Pega a senha crua para validação
+        $senha_raw = $dados->senha;
 
-        // =================================================================
-        // ADICIONADO: Bloco de validação de força da senha
-        // =================================================================
-        if (strlen($senha_raw) < 8 || !preg_match('/[0-9]/', $senha_raw)) {
+        // Validação da força da senha usando a nova função
+        $password_validation_result = validatePasswordStrength($senha_raw);
+        if ($password_validation_result !== true) {
             http_response_code(400); // Bad Request
-            $response["mensagem"] = "A senha deve ter no mínimo 8 caracteres e conter pelo menos um número.";
+            $response["mensagem"] = $password_validation_result;
             echo json_encode($response);
             exit; // Interrompe a execução do script
         }
 
-        // Agora que a senha foi validada, podemos criar o hash seguro
         $senha_hash = password_hash($senha_raw, PASSWORD_DEFAULT);
         $token = md5(uniqid(rand(), true));
 
@@ -57,12 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             http_response_code(409);
             $response["mensagem"] = "Este e-mail já está cadastrado.";
         } else {
-            // ALTERADO: Usa a variável $senha_hash
             $stmt_insert = $conn->prepare("INSERT INTO usuarios (email, telefone, nome, senha, token, ativado) VALUES (?, ?, ?, ?, ?, 0)");
             $stmt_insert->bind_param("sssss", $email, $telefone, $nome, $senha_hash, $token);
 
             if ($stmt_insert->execute()) {
-                if (function_exists('enviarEmailAtivacao')) {
+                if (function_exists("enviarEmailAtivacao")) {
                     if (enviarEmailAtivacao($email, $nome, $token)) {
                         http_response_code(201);
                         $response = ["status" => "sucesso", "mensagem" => "Usuário cadastrado com sucesso! Verifique seu e-mail para ativar a conta."];

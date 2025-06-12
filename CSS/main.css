@@ -104,12 +104,12 @@ iframe {
 .container-login100 {
   width: 100%;  
   min-height: 100vh;
-  display: -webkit-box;
+  /* display: -webkit-box;
   display: -webkit-flex;
   display: -moz-box;
-  display: -ms-flexbox;
+  display: -ms-flexbox; */
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   justify-content: center;
   align-items: center;
   padding: 15px;
@@ -141,19 +141,16 @@ iframe {
 }
 
 .wrap-login100-2 {
-  width:auto;
-  height: auto;
+  max-width: 960px; /* Adicionado: Evita que o container fique muito largo em telas grandes */
+  width: 100%;      /* Alterado: Permite que o container se ajuste a telas menores */
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
   background-image: url(../assets/banner-cafe-1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  background-position: center; /* Adicionado: Centraliza a imagem de fundo */
 
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -163,7 +160,7 @@ iframe {
 /*------------------------------------------------------------------
 [  ]*/
 .login100-pic {
-  width: 316px;
+  width: 350px;
 }
 
 .login100-pic img {

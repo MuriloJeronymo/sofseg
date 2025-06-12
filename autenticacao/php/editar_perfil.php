@@ -1,7 +1,7 @@
 <?php
-session_start(); // Iniciar a sessão
-require_once '../../includes/verifica_sessao.php'; // Garante que o usuário está logado
-require_once '../../includes/db.php'; // Conexão com o banco (usa $conn com mysqli)
+//session_start(); // Não precisa mais, pois inclui o includes/verifica_sessao.php que já faz isso
+require_once '../../includes/verifica_sessao.php';
+require_once '../../includes/db.php';
 
 // Buscar dados atuais do usuário usando a variável de sessão correta
 $user_id = $_SESSION['usuario']['id']; // Usar o ID do array 'usuario'
@@ -42,7 +42,7 @@ $base_path_fotos = '../uploads/fotos_perfil/'; // Exemplo, pode precisar de ajus
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil - Sofseg</title>
+    <title>Editar Perfil | BookShell</title>
     <!-- Adicionar links para CSS aqui, se necessário, para manter o estilo -->
     <link rel="stylesheet" href="../recursos/animate/animate.css"> <!-- Exemplo -->
     <style>
@@ -107,7 +107,7 @@ $base_path_fotos = '../uploads/fotos_perfil/'; // Exemplo, pode precisar de ajus
             <input type="submit" value="Salvar Alterações">
         </form>
 
-        <a href="dashboard.php" class="voltar">&laquo; Voltar para o Dashboard</a>
+        <a href="../html/dashboard.html" class="voltar">&laquo; Voltar para o Dashboard</a>
     </div>
 </body>
 </html>

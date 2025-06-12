@@ -19,10 +19,8 @@ campos.forEach(campo => {
     input.addEventListener('input', function (e) {
         const value = e.target.value;
         const sanitizedValue = value
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
+            .replace(/[<>"]/g, '')
+            .replace(/'/g, '');
 
         e.target.value = sanitizedValue;
     });

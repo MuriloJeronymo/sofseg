@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 return; // Interrompe se estiver bloqueado
             }
 
-            const currentEmailValue = emailInput.value.trim(); // Pega valor atual do campo
-            const currentPasswordValue = passwordInput.value; // Pega valor atual do campo
+            const currentEmailValue = emailInput.value.trim();
+            const currentPasswordValue = passwordInput.value;
 
             if (mensagemLoginApi) {
                 mensagemLoginApi.textContent = '';
@@ -139,10 +139,26 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
+            // ================= INICIO DA CRIPTOGRAFIA =================
+            // Criptografa os dados usando a função do arquivo criptografia.js
+            const encryptedEmail = CriptoLogin.encrypt(currentEmailValue);
+            const encryptedPassword = CriptoLogin.encrypt(currentPasswordValue);
+
+            // Verifica se a criptografia funcionou antes de prosseguir
+            if (!encryptedEmail || !encryptedPassword) {
+                if (mensagemLoginApi) {
+                    mensagemLoginApi.textContent = 'Erro ao preparar os dados para envio.';
+                }
+                return;
+            }
+            
+            // Cria o objeto de login com os dados JÁ CRIPTOGRAFADOS
             const dadosLogin = {
-                email: currentEmailValue,
-                senha: currentPasswordValue
+                email: encryptedEmail,
+                senha: encryptedPassword
             };
+            // ================== FIM DA CRIPTOGRAFIA ===================
+
 
             setLoginFormDisabled(true); // Desabilita o formulário durante a requisição
             if (mensagemLoginApi) {
@@ -172,7 +188,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         localStorage.setItem('usuarioLogado', JSON.stringify(resultado.usuario));
                     }
                     localStorage.setItem('isLogado', 'true');
-                    window.location.href = '../../autenticado.php';
+                    window.location.href = '/ProjetoSoftwareSeguro/autenticacao/html/autenticado.html';
                 } else {
                     // Login falhou (API retornou erro)
                     let failedAttempts = parseInt(sessionStorage.getItem(STORAGE_KEY_FAILED_ATTEMPTS) || '0');
@@ -183,7 +199,6 @@ document.addEventListener('DOMContentLoaded', function () {
                         const lockoutEndTime = Date.now() + (LOCKOUT_DURATION_SECONDS * 1000);
                         sessionStorage.setItem(STORAGE_KEY_LOCKOUT_UNTIL, lockoutEndTime.toString());
                         checkAndManageLockout(); // Aplica o bloqueio e inicia a contagem regressiva
-                        // A função checkAndManageLockout já desabilita o formulário.
                     } else {
                         if (mensagemLoginApi) {
                             mensagemLoginApi.textContent = (resultado.mensagem || `Erro: ${response.status}`) +
@@ -201,8 +216,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
                 setLoginFormDisabled(false); // Habilita em caso de erro de rede
             }
-            // Não há mais o 'finally' para habilitar o botão, pois o estado de bloqueio
-            // ou as condições de erro/sucesso já cuidam disso.
         });
     }
 });

@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             try {
 
-                const response = await fetch('../../api/registrar.php', {
+                const response = await fetch('/ProjetoSoftwareSeguro/api/registrar.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

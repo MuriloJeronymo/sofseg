@@ -158,7 +158,7 @@ input[type=range] {
 input {
   width: 100%;
   font-size: 16px;
-  border: 2px solid #e7ce0e;
+  border: 2px solid rgba(75, 73, 73, 0.888);
   border-radius: 25px;
   outline: none;
   margin-bottom: 5px;
@@ -196,7 +196,7 @@ input::placeholder {
 }
 
 input.vazio {
-  border-color: #e7ce0e;
+  border-color: #e7ce0e7e;
 }
 
 input.valido {
@@ -215,16 +215,13 @@ input.invalido {
   background-color: #ffe5e5;
   padding: 4px 8px;
   border-radius: 4px;
-
-  /* ESTABILIZA A ALTURA */
-  min-height: 24px;
   line-height: 1.2;
-  display: flex;
+  
+  /* Garante que o elemento não ocupe espaço quando oculto */
+  display: none; 
   align-items: center;
   justify-content: center;
-
-  /* MANTÉM O ESPAÇO FIXO SEM IMPORTAR O TEXTO */
-  visibility: hidden;
+  
   opacity: 0;
   transition: opacity 0.2s ease;
 }

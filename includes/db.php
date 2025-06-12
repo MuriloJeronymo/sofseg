@@ -19,7 +19,7 @@ if ($pos === false) {
 
 // Extrai e limpa o JSON
 $json = substr($data, $pos + strlen($marker));
-$json = preg_replace('/[^[:print:]]/', '', $json);
+$json = preg_replace("/[^[:print:]]/", "", $json);
 $creds = json_decode(trim($json), true);
 
 if (!$creds) {
@@ -27,7 +27,7 @@ if (!$creds) {
 }
 
 // Conecta ao banco
-$conn = new mysqli($creds['host'], $creds['user'], $creds['pass'], $creds['dbname']);
+$conn = new mysqli($creds["host"], $creds["user"], $creds["pass"], $creds["dbname"]);
 
 if ($conn->connect_error) {
     die("Erro na conexão: " . $conn->connect_error);
@@ -35,3 +35,4 @@ if ($conn->connect_error) {
 
 // echo "✅ Conectado com sucesso ao banco! ✅";
 ?>
+
